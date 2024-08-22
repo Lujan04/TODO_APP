@@ -22,8 +22,6 @@ class LoginRegister extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height: 30),
-                  // title,
-                  SizedBox(height: 30),
                   CircleAvatar(
                       radius: 70, // Image radius
                       backgroundImage: AssetImage('assets/favicon.jpg')),
@@ -99,7 +97,7 @@ class FormButtons extends StatelessWidget {
         const SizedBox(width: 10),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 0, 0, 0),
+              backgroundColor: const Color.fromARGB(255, 0, 0, 0),
               foregroundColor: Colors.white),
           onPressed: () {
             _signup();
@@ -171,6 +169,7 @@ class EmailField extends StatelessWidget {
           if (!emailRegex.hasMatch(value)) {
             return 'Please, enter a valid Email';
           }
+
           return null;
         },
       ),
@@ -233,7 +232,9 @@ class PasswordField extends StatelessWidget {
 
 _signup() async {
   final user = await auth.createUserEmailPswrd(
-      emailcontroller.text, pswrdcontroller.text);
+    emailcontroller.text,
+    pswrdcontroller.text,
+  );
   if (user != null) {
     print(
         'user created succesfully credentials email ${emailcontroller.text} pswrd ${pswrdcontroller.text} ');

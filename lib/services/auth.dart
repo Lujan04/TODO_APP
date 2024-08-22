@@ -4,14 +4,16 @@ class Auth {
   final auth = FirebaseAuth.instance;
 
   Future<User?> createUserEmailPswrd(
-      String emailinput, String pswrdinput) async {
+    String emailinput,
+    String pswrdinput,
+  ) async {
     try {
       final credentials = await auth.createUserWithEmailAndPassword(
           email: emailinput, password: pswrdinput);
 
       return credentials.user;
     } catch (a) {
-      print('Algo salio mal ${a}');
+      print('Algo salio mal $a');
     }
     return null;
   }
@@ -24,7 +26,7 @@ class Auth {
 
       return credentials.user;
     } catch (a) {
-      print('Algo salio mal');
+      print('Algo salio mal $a');
     }
     return null;
   }
@@ -32,8 +34,8 @@ class Auth {
   Future<void> signout() async {
     try {
       auth.signOut();
-    } catch (e) {
-      print('algo salio mal');
+    } catch (a) {
+      print('algo salio mal $a');
     }
   }
 }
