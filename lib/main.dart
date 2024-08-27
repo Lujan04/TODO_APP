@@ -2,6 +2,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/Screens/Login_register.dart';
+import 'package:todo_app/routes/screen_routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +20,7 @@ class Myapp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const LoginRegister(),
       theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
+      routes: ScreenRoutes.routes,
     );
   }
 }

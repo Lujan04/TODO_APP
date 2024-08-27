@@ -87,8 +87,8 @@ class FormButtons extends StatelessWidget {
           style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 0, 0, 0),
               foregroundColor: Colors.white),
-          onPressed: () {
-            _login();
+          onPressed: () async {
+            await _login(context);
             print('Login button pressed');
             if (_formKey.currentState!.validate()) {}
           },
@@ -99,8 +99,8 @@ class FormButtons extends StatelessWidget {
           style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 0, 0, 0),
               foregroundColor: Colors.white),
-          onPressed: () {
-            _signup();
+          onPressed: () async {
+            _signup(context);
             print('Register button pressed');
             if (_formKey.currentState!.validate()) {}
           },
@@ -230,7 +230,7 @@ class PasswordField extends StatelessWidget {
   }
 }
 
-_signup() async {
+_signup(BuildContext context) async {
   final user = await auth.createUserEmailPswrd(
     emailcontroller.text,
     pswrdcontroller.text,
@@ -238,15 +238,35 @@ _signup() async {
   if (user != null) {
     print(
         'user created succesfully credentials email ${emailcontroller.text} pswrd ${pswrdcontroller.text} ');
-
-    //go to home_screen
+    _gohome(context);
+  } else if (user == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Error al crear el usuario'),
+        backgroundColor: Colors.red, // Opcional: color de fondo del snackbar
+        duration: Duration(seconds: 2), // Opcional: duración del snackbar
+      ),
+    );
   }
 }
 
-_login() async {
+_login(BuildContext context) async {
   final user = await auth.loginUserEmailPswrd(
       emailcontroller.text, pswrdcontroller.text);
   if (user != null) {
     print('user login succesfully');
+    _gohome(context);
+  } else if (user == null) {
+    // Mostrar Snackbar en caso de error
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Error al iniciar sesión'),
+        backgroundColor: Colors.red, // Opcional: color de fondo del snackbar
+        duration: Duration(seconds: 2), // Opcional: duración del snackbar
+      ),
+    );
   }
 }
+
+_gohome(BuildContext context) =>
+    Navigator.pushReplacementNamed(context, '/home');
